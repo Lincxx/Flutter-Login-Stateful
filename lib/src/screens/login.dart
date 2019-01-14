@@ -14,6 +14,8 @@ class _LoginScreenState extends State<LoginScreen> {
   //Global key of the FormState
   final formKey = GlobalKey<FormState>();
 
+  String email= '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
         //   return null;
         // }
       },
+      onSaved: (String value) {
+        email = value;
+        print(value);
+      },
     );
   }
 
@@ -76,13 +82,23 @@ class _LoginScreenState extends State<LoginScreen> {
         //   return null;
         // }
       },
+      onSaved: (String value) {
+        password = value;
+        print(value);
+      },
     );
   }
 
   Widget submitButton() {
     return RaisedButton(
       onPressed: () {
-        print(formKey.currentState.validate());
+        if(formKey.currentState.validate()){
+          formKey.currentState.save();
+          // take *both* email and password
+          // and post them somewhere
+          print('Time to post $email and $password to my API');
+          
+        }
       },
       child: Text('Submit'),
       color: Colors.blue,
