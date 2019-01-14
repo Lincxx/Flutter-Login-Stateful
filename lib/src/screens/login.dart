@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../mixins/validation_mixin.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
 
@@ -10,7 +12,7 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with ValidationMixin{
   //Global key of the FormState
   final formKey = GlobalKey<FormState>();
 
@@ -47,18 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
           labelText: 'Email Address', hintText: 'you@example.com'),
       keyboardType: TextInputType.emailAddress,
-      validator: (String value) {
-        if(!value.contains('@')){
-          // return error message
-          return 'Please enter a valid email';
-        } 
-
-        //returns null by default so the else is not needed
-        // else {
-        //   // return null if valid
-        //   return null;
-        // }
-      },
+      validator: validatEmail, // we are not trying to envoke this, just passing a reference
       onSaved: (String value) {
         email = value;
         print(value);
@@ -70,18 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Password', hintText: 'Password'),
       obscureText: false,
-      validator: (String value) {
-        if(value.length < 4){
-          // return error message
-          return 'Please must be at least 4 character';
-        } 
-
-        //returns null by default so the else is not needed
-        // else {
-        //   // return null if valid
-        //   return null;
-        // }
-      },
+      validator: validatPassword, // we are not trying to envoke this, just passing a reference
       onSaved: (String value) {
         password = value;
         print(value);
